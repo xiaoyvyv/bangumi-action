@@ -59,9 +59,9 @@ async function generateBgmImage(userId) {
 
     const data = await bgm.loadAllUserCollection(userId);
 
-    const tempHtml = fs.readFileSync("./tmpl/tmp.html", 'utf8');
-    const animeTempHtml = fs.readFileSync("./tmpl/anime.html", 'utf8');
-    const gameTempHtml = fs.readFileSync("./tmpl/game.html", 'utf8');
+    const tempHtml = fs.readFileSync("tmpl/tmp.html", 'utf8');
+    const animeTempHtml = fs.readFileSync("tmpl/anime.html", 'utf8');
+    const gameTempHtml = fs.readFileSync("tmpl/game.html", 'utf8');
 
     let characters = await bgm.loadCharacter(userId);
 
