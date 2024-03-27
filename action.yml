@@ -1,13 +1,18 @@
-name: 'Hello World'
-description: 'Greet someone and record the time'
+name: 'Bangumi.TV Collection Action'
+description: 'Bangumi.TV 每日同步生成个人收藏卡片，自动上传仓库的 Github Action 服务'
 inputs:
-  who-to-greet:  # id of input
-    description: 'Who to greet'
+  github-token: ${{ secrets.GITHUB_TOKEN }}
+  bgm-user-id:
+    description: '班固米的用户ID，设置过用户名请使用用户名'
     required: true
-    default: 'World'
+    default: 'xiaoyvyv'
+  bgm-img-path:
+    description: '图片卡片上传保存路径'
+    required: true
+    default: './bgm/left.svg'
 outputs:
-  time: # id of output
-    description: 'The time we greeted you'
+  image-path:
+    description: '生成的图片文件路径'
 runs:
   using: 'node20'
   main: 'dist/index.js'

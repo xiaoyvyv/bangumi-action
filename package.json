@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "node index.js",
     "package": "ncc build index.js --license licenses.txt"
   },
   "keywords": [],
@@ -12,6 +12,9 @@
   "license": "ISC",
   "dependencies": {
     "@actions/core": "^1.10.1",
-    "@actions/github": "^6.0.0"
+    "@actions/github": "^6.0.0",
+    "@actions/http-client": "^2.2.1",
+    "cheerio": "^1.0.0-rc.12",
+    "sharp": "^0.33.3"
   }
 }
