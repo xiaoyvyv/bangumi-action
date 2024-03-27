@@ -1,7 +1,7 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
-const tmpl = require('tmpl/tmpl');
-const bgm = require('./api/bgm');
+const tmpl = require('./tmpl/tmpl.js');
+const bgm = require('./api/bgm.js');
 
 try {
     let bgmUserId = core.getInput('bgm-user-id').trim();
