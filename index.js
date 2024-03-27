@@ -8,7 +8,7 @@ try {
     if (bgmUserId.length === 0) {
         bgmUserId = "xiaoyvyv"
     }
-    const githubToken = core.getInput("github-token") || "xxx";
+    const githubToken = core.getInput("github-token") || "-----------";
     const octokit = github.getOctokit(githubToken);
 
     console.log(`Generate for ${bgmUserId}!, token: ${githubToken}`);
@@ -24,6 +24,8 @@ try {
 function uploadImage(octokit, string) {
     const {owner, repo} = github.context.repo;
     const fileName = core.getInput("bgm-img-path");
+
+    console.log(`owner:${owner}, repo: ${repo}`);
 
     // 上传文件
     octokit.repos.createOrUpdateFileContents({
