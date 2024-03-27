@@ -11,8 +11,8 @@ inputs:
     required: true
     default: './bgm/left.svg'
 outputs:
-  image-path:
-    description: '生成的图片文件路径'
+  message:
+    description: '信息'
 runs:
   using: 'node20'
   main: 'dist/index.js'
