@@ -1,7 +1,9 @@
 name: 'Bangumi.TV Collection Action'
 description: 'Bangumi.TV 每日同步生成个人收藏卡片，自动上传仓库的 Github Action 服务'
 inputs:
-  github-token: ${{ secrets.GITHUB_TOKEN }}
+  github-token:
+    description: "Github Token"
+    required: true
   bgm-user-id:
     description: '班固米的用户ID，设置过用户名请使用用户名'
     required: true
