@@ -40094,6 +40094,14 @@ function wrappy (fn, cb) {
 
 /***/ }),
 
+/***/ 108:
+/***/ ((module) => {
+
+module.exports = eval("require")("tmpl/tmpl");
+
+
+/***/ }),
+
 /***/ 9491:
 /***/ ((module) => {
 
@@ -50471,8 +50479,7 @@ var __webpack_exports__ = {};
 (() => {
 const core = __nccwpck_require__(4181);
 const github = __nccwpck_require__(2726);
-const fs = __nccwpck_require__(7147);
-
+const tmpl = __nccwpck_require__(108);
 const bgm = __nccwpck_require__(2966);
 
 try {
@@ -50530,9 +50537,8 @@ async function generateBgmImage(userId) {
 
     const data = await bgm.loadAllUserCollection(userId);
 
-    const tempHtml = fs.readFileSync("tmpl/tmp.html", 'utf8');
-    const animeTempHtml = fs.readFileSync("tmpl/anime.html", 'utf8');
-    const gameTempHtml = fs.readFileSync("tmpl/game.html", 'utf8');
+    const tempHtml = tmpl.temp;
+    const animeTempHtml = tmpl.anime;
 
     let characters = await bgm.loadCharacter(userId);
 

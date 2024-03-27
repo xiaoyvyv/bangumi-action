@@ -1,7 +1,6 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
-const fs = require('fs');
-
+const tmpl = require('tmpl/tmpl');
 const bgm = require('./api/bgm');
 
 try {
@@ -59,9 +58,8 @@ async function generateBgmImage(userId) {
 
     const data = await bgm.loadAllUserCollection(userId);
 
-    const tempHtml = fs.readFileSync("tmpl/tmp.html", 'utf8');
-    const animeTempHtml = fs.readFileSync("tmpl/anime.html", 'utf8');
-    const gameTempHtml = fs.readFileSync("tmpl/game.html", 'utf8');
+    const tempHtml = tmpl.temp;
+    const animeTempHtml = tmpl.anime;
 
     let characters = await bgm.loadCharacter(userId);
 
