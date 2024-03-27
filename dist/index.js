@@ -50515,8 +50515,9 @@ function uploadImage(octokit, string) {
         sha: '', // 强制覆盖已有文件
     }).then(() => {
         console.log(`File "${fileName}" uploaded successfully.`);
+        core.setOutput("message", `File "${fileName}" uploaded successfully.`);
     }).catch(error => {
-        console.error(`Error uploading file "${fileName}":`, error);
+        core.setOutput("message", `Error uploading file "${fileName}":` + error);
         core.setFailed(error.message);
     });
 }
