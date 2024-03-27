@@ -84,10 +84,40 @@ const downloadImage = async (url) => {
         .then(buffer => buffer.toString('base64').trim());
 };
 
+async function upload(token, user, repo, path, content) {
+    const url = `https://api.github.com/repos/${user}/${repo}/contents/${path}`;
+
+    const header = {
+        "Authorization": `Bearer ${token}`,
+        "Accept": "application/vnd.github+json",
+        'X-GitHub-Api-Version': "2022-11-28",
+        "User-Agent": 'Github: https://github.com/xiaoyvyv/bangumi-action'
+    }
+
+    const response = await client.get(url, header)
+        .then(res => res.readBody())
+        .then(data => JSON.parse(data));
+
+    const sha = response['sha'] || '';
+    const data = {
+        message: "BGM 更新",
+        committer: {
+            name: "Bangumi for Github Action",
+            email: "actions@github.com"
+        },
+        content: content,
+        sha: sha
+    };
+    const res = await client.putJson(url, data, header).then(res => res.statusCode);
+
+    console.log(`Result: ${res}`);
+}
+
 module.exports = {
     loadAllUserCollection: loadAllUserCollection,
     downloadImage: downloadImage,
-    loadCharacter: loadCharacter
+    loadCharacter: loadCharacter,
+    upload: upload
 }
 
 /***/ }),
@@ -50919,48 +50949,38 @@ try {
     if (bgmUserId.length === 0) {
         bgmUserId = "xiaoyvyv"
     }
-    const githubToken = core.getInput("github-token") || "-----------";
-    const octokit = github.getOctokit(githubToken);
+
+    const githubToken = core.getInput("github-token");
 
     console.log(`Generate for ${bgmUserId}!, token: ${githubToken}`);
 
     generateBgmImage(bgmUserId).then((string) => {
         console.log("生成卡片执行完成");
-        uploadImage(octokit, string);
+        uploadImage(githubToken, string);
     });
 } catch (error) {
     core.setFailed(error.message);
 }
 
-function uploadImage(octokit, string) {
+function uploadImage(githubToken, string) {
+    // const {owner, repo} = {owner: "xiaoyvyv", repo: "bangumi-data"};
     const {owner, repo} = github.context.repo;
-    const fileName = core.getInput("bgm-img-path");
+    const fileName = core.getInput("bgm-img-path") || "data/bgm-collection.svg";
 
     console.log(`owner:${owner}, repo: ${repo}`);
 
-    // 上传文件
-    octokit.repos.createOrUpdateFileContents({
-        owner: owner,
-        repo: repo,
-        path: fileName,
-        message: 'Upload bgm card form GitHub Actions',
-        content: Buffer.from(string).toString('base64'),
-        committer: {
-            name: 'GitHub Actions',
-            email: 'actions@github.com',
-        },
-        author: {
-            name: 'GitHub Actions',
-            email: 'actions@github.com',
-        },
-        sha: '', // 强制覆盖已有文件
-    }).then(() => {
-        console.log(`File "${fileName}" uploaded successfully.`);
-        core.setOutput("message", `File "${fileName}" uploaded successfully.`);
-    }).catch(error => {
-        core.setOutput("message", `Error uploading file "${fileName}":` + error);
-        core.setFailed(error.message);
-    });
+    bgm.upload(githubToken, owner, repo, fileName, Buffer.from(string).toString('base64'))
+        .then(() => {
+            console.log("上传成功！")
+
+            core.setOutput("message", "成功!");
+        })
+        .catch(error => {
+            console.log(error);
+
+            core.setOutput("message", `Error uploading file "${fileName}":` + error);
+            core.setFailed(error.message);
+        })
 }
 
 async function generateBgmImage(userId) {

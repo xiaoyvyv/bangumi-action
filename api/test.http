@@ -1,0 +1,24 @@
+PUT https://api.github.com/repos/xiaoyvyv/bangumi-data/contents/data/test2.svg
+Content-Type: application/json
+Authorization: Bearer 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
+Accept: application/vnd.github+json
+X-GitHub-Api-Version: 2022-11-28
+User-Agent: xxx
+
+{
+  "message": "BGM 更新",
+  "committer": {
+    "name": "Bangumi for Github Action",
+    "email": "actions@github.com"
+  },
+  "content": "5L2g5piv",
+  "sha": ""
+}
+
+###
+GET https://api.github.com/repos/xiaoyvyv/bangumi-data/contents/data/test.svg
+Content-Type: application/json
+Authorization: Bearer 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
+Accept: application/vnd.github+json
+X-GitHub-Api-Version: 2022-11-28
+User-Agent: xxx

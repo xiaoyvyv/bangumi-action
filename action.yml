@@ -11,7 +11,7 @@ inputs:
   bgm-img-path:
     description: '图片卡片上传保存路径'
     required: true
-    default: './bgm/left.svg'
+    default: 'bgm/left.svg'
 outputs:
   message:
     description: '信息'
