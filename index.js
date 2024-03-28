@@ -52,8 +52,8 @@ async function uploadImage(githubToken, string) {
         },
         sha: sha,
     }).then(() => {
-        console.log(`File "${fileName}" uploaded successfully.`);
-        core.setOutput("message", "成功!");
+        console.log(`上传成功`);
+        core.setOutput("message", `https://github.com/${owner}/${repo}/raw/main/${fileName}`);
     }).catch(error => {
         console.error(`Error uploading file "${fileName}":`, error);
         core.setOutput("message", `Error uploading file "${fileName}":` + error);

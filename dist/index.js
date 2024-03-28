@@ -40099,7 +40099,7 @@ function wrappy (fn, cb) {
 
 module.exports = {
     temp: "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n" +
-        "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"480\" height=\"950\" class=\"\">\n" +
+        "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"480\" height=\"860\" class=\"\">\n" +
         "    <defs>\n" +
         "        <style/>\n" +
         "    </defs>\n" +
@@ -50938,7 +50938,7 @@ async function uploadImage(githubToken, string) {
     const fileName = core.getInput("bgm-img-path") || "data/bgm-collection.svg";
 
     console.log(`owner:${owner}, repo: ${repo}`);
-    
+
     const octokit = github.getOctokit(githubToken);
     const res = await octokit.rest.repos.getContent({
         owner: owner,
@@ -50963,8 +50963,8 @@ async function uploadImage(githubToken, string) {
         },
         sha: sha,
     }).then(() => {
-        console.log(`File "${fileName}" uploaded successfully.`);
-        core.setOutput("message", "成功!");
+        console.log(`上传成功`);
+        core.setOutput("message", `https://github.com/${owner}/${repo}/raw/main/${fileName}`);
     }).catch(error => {
         console.error(`Error uploading file "${fileName}":`, error);
         core.setOutput("message", `Error uploading file "${fileName}":` + error);
