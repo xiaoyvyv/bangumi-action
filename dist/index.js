@@ -50924,21 +50924,28 @@ try {
 
     console.log(`Generate for ${bgmUserId}!, token: ${githubToken}`);
 
-    generateBgmImage(bgmUserId).then((string) => {
+    generateBgmImage(bgmUserId).then(async (string) => {
         console.log("生成卡片执行完成");
-        uploadImage(githubToken, string);
+        await uploadImage(githubToken, string);
     });
 } catch (error) {
     core.setFailed(error.message);
 }
 
-function uploadImage(githubToken, string) {
+async function uploadImage(githubToken, string) {
     // const {owner, repo} = {owner: "xiaoyvyv", repo: "bangumi-data"};
     const {owner, repo} = github.context.repo;
     const fileName = core.getInput("bgm-img-path") || "data/bgm-collection.svg";
 
     console.log(`owner:${owner}, repo: ${repo}`);
+    
     const octokit = github.getOctokit(githubToken);
+    const res = await octokit.rest.repos.getContent({
+        owner: owner,
+        repo: repo,
+        path: fileName
+    });
+    const sha = res.data['sha'] || '';
 
     octokit.rest.repos.createOrUpdateFileContents({
         owner: owner,
@@ -50954,7 +50961,7 @@ function uploadImage(githubToken, string) {
             name: 'GitHub Actions',
             email: 'actions@github.com',
         },
-        sha: '', // 强制覆盖已有文件
+        sha: sha,
     }).then(() => {
         console.log(`File "${fileName}" uploaded successfully.`);
         core.setOutput("message", "成功!");
