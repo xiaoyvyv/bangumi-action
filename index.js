@@ -133,7 +133,8 @@ async function generateBgmImage(userId) {
         }
     });
 
-    const output = tempHtml
+    //  fs.writeFileSync("output.svg", output, 'utf-8');
+    return tempHtml
         .replace("#{TAGS}", topTags.join(', '))
         .replace("#{COUNT_ANIME_DONE}", animeList.length.toString())
         .replace("#{COUNT_BOOK_DONE}", bookList.length.toString())
@@ -145,9 +146,6 @@ async function generateBgmImage(userId) {
         .replace("#{COUNT_GAME_DOING}", doingGame.toString())
         .replace("#{INFO_TOP_GAME}", mostLikeGame)
         .replace("#{INFO_RECENTLY_GAME}", recentlyGame);
-
-    //  fs.writeFileSync("output.svg", output, 'utf-8');
-    return output;
 }
 
 

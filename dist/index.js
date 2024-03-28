@@ -84,40 +84,10 @@ const downloadImage = async (url) => {
         .then(buffer => buffer.toString('base64').trim());
 };
 
-async function upload(token, user, repo, path, content) {
-    const url = `https://api.github.com/repos/${user}/${repo}/contents/${path}`;
-
-    const header = {
-        "Authorization": `Bearer ${token}`,
-        "Accept": "application/vnd.github+json",
-        'X-GitHub-Api-Version': "2022-11-28",
-        "User-Agent": 'Github: https://github.com/xiaoyvyv/bangumi-action'
-    }
-
-    const response = await client.get(url, header)
-        .then(res => res.readBody())
-        .then(data => JSON.parse(data));
-
-    const sha = response['sha'] || '';
-    const data = {
-        message: "BGM 更新",
-        committer: {
-            name: "Bangumi for Github Action",
-            email: "actions@github.com"
-        },
-        content: content,
-        sha: sha
-    };
-    const res = await client.putJson(url, data, header).then(res => res.statusCode);
-
-    console.log(`Result: ${res}`);
-}
-
 module.exports = {
     loadAllUserCollection: loadAllUserCollection,
     downloadImage: downloadImage,
     loadCharacter: loadCharacter,
-    upload: upload
 }
 
 /***/ }),
@@ -51074,7 +51044,8 @@ async function generateBgmImage(userId) {
         }
     });
 
-    const output = tempHtml
+    //  fs.writeFileSync("output.svg", output, 'utf-8');
+    return tempHtml
         .replace("#{TAGS}", topTags.join(', '))
         .replace("#{COUNT_ANIME_DONE}", animeList.length.toString())
         .replace("#{COUNT_BOOK_DONE}", bookList.length.toString())
@@ -51086,9 +51057,6 @@ async function generateBgmImage(userId) {
         .replace("#{COUNT_GAME_DOING}", doingGame.toString())
         .replace("#{INFO_TOP_GAME}", mostLikeGame)
         .replace("#{INFO_RECENTLY_GAME}", recentlyGame);
-
-    //  fs.writeFileSync("output.svg", output, 'utf-8');
-    return output;
 }
 
 
