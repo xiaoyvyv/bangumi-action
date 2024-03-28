@@ -1,6 +1,9 @@
 # Bangumi.tv 收藏卡片 for Github Actions
 
-这个 Actions 脚本可以根据你的 Bangumi.TV 的收藏，自动生成一个精美的卡片，并自动上传到 github 仓库，你可以在任何地方引用这个收藏卡片的链接，并且会根据你配置的 Github Actions 定时自动更新。
+这个 Actions 脚本可以根据你的 Bangumi.TV 的收藏，自动生成一个精美的卡片，并自动上传到 github 仓库，你可以在任何地方（你的网站、博客首页、Github首页）引用这个收藏卡片的图片链接，并且会根据你配置的 Github Actions 定时自动更新。
+
+### 卡片预览效果
+![https://github.com/xiaoyvyv/bangumi-action](https://github.com/xiaoyvyv/bangumi-data/raw/main/bgm/card.svg)
 
 ## Inputs
 
@@ -13,7 +16,7 @@
 
 - ### `bgm-img-path`
 
-  生成成功后，上传的当前仓库的路径，如 `bgm/collection.svg` 则会上传到当前仓库 `bgm` 文件夹下。
+  生成成功后，上传的当前仓库的路径，如 `bgm/collection.svg` 则会上传到当前仓库 `bgm` 文件夹下，需要以 `.svg` 结尾。
 
 
 ## Github Action 使用示例
