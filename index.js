@@ -33,7 +33,7 @@ async function uploadImage(githubToken, string) {
         owner: owner,
         repo: repo,
         path: fileName
-    });
+    }).catch(() => ({}));
     const sha = res.data['sha'] || '';
 
     octokit.rest.repos.createOrUpdateFileContents({
