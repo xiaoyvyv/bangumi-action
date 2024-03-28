@@ -44,7 +44,7 @@ jobs:
     steps:
       - name: Bgm Collection Card
         id: bgm
-        uses: xiaoyvyv/bangumi-action@v1.1.15
+        uses: xiaoyvyv/bangumi-action@v1.1.17
         with:
           github-token: '${{secrets.GITHUB_TOKEN}}'
           bgm-user-id: 'xiaoyvyv'
