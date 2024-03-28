@@ -18,6 +18,10 @@
 
   生成成功后，上传的当前仓库的路径，如 `bgm/collection.svg` 则会上传到当前仓库 `bgm` 文件夹下，需要以 `.svg` 结尾。
 
+## 注意事项
+你需要在配置该 Actions 的仓库设置页面，将 Action 的权限从 `只读` 调整为 `读写`
+
+> 项目页面 -> Settings TAB -> Action -> General -> Workflow permissions -> 勾选 Read and write permissions -> Save
 
 ## Github Action 使用示例
 
