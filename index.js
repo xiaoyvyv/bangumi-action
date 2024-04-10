@@ -16,9 +16,34 @@ try {
     generateBgmImage(bgmUserId).then(async (string) => {
         console.log("生成卡片执行完成");
         await uploadImage(githubToken, string);
+
+        console.log("创建 Release");
+        await createRelease(githubToken);
     });
 } catch (error) {
     core.setFailed(error.message);
+}
+
+const createRelease = async (githubToken) => {
+    // TagName
+    const date = new Date();
+    const year = date.getFullYear();
+    const month = ('0' + (date.getMonth() + 1)).slice(-2);
+    const day = ('0' + date.getDate()).slice(-2);
+    const hours = ('0' + date.getHours()).slice(-2);
+    const minutes = ('0' + date.getMinutes()).slice(-2);
+    const tagName = 'v' + year + '-' + month + '-' + day + '-' + hours + '-' + minutes;
+
+    // 创建 release
+    const octokit = github.getOctokit(githubToken);
+    const {owner, repo} = github.context.repo;
+    const data = await octokit.rest.repos.createRelease({
+        owner: owner,
+        repo: repo,
+        tag_name: tagName,
+    }).catch((e) => ({data: e.message}));
+
+    console.log(data.data);
 }
 
 async function uploadImage(githubToken, string) {
