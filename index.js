@@ -156,19 +156,27 @@ async function generateBgmImage(userId) {
         .replace("#{INFO_RECENTLY_GAME}", recentlyGame);
 }
 
+function escapeHtml(unsafe) {
+    return unsafe
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
 
 async function generateSubjectItem(items, animeTempHtml, typeName) {
     if (items == null) return ""
     let tmp = "";
     for (const item of items) {
         tmp = tmp + animeTempHtml
-            .replace("#{ANIME_TYPE}", typeName)
-            .replace("#{ANIME_NAME}", getName(item.subject))
+            .replace("#{ANIME_TYPE}", escapeHtml(typeName))
+            .replace("#{ANIME_NAME}", escapeHtml(getName(item.subject)))
             .replace("#{ANIME_DATE}", item.subject['date'])
             .replace("#{ANIME_COLLECTION}", item.subject['collection_total'])
             .replace("#{ANIME_EPS}", item.subject['eps'] + "话")
-            .replace("#{ANIME_INFO}", getTags(item))
-            .replace("#{ANIME_DESC}", item.subject['short_summary'])
+            .replace("#{ANIME_INFO}", escapeHtml(getTags(item)))
+            .replace("#{ANIME_DESC}", escapeHtml(item.subject['short_summary']))
             .replace("#{ANIME_IMAGE}", await bgm.downloadImage(item.subject['images']['small']))
     }
     return tmp;
