@@ -60,7 +60,7 @@ const loadCharacter = async (userId) => {
 
             $("#columnA ul > li").each((index, item) => {
                 // noinspection JSCheckFunctionSignatures
-                const img = $(item).find(".image img");
+                const img = $(item).find("img");
                 const imgUrl = "https:" + $(img).attr("src").replace("pic/crt/g", "pic/crt/m");
                 items.push({
                     image: imgUrl
