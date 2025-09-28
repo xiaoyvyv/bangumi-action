@@ -16,5 +16,8 @@
     "@actions/http-client": "^2.2.1",
     "cheerio": "^1.0.0-rc.12",
     "sharp": "^0.33.3"
+  },
+  "devDependencies": {
+    "@vercel/ncc": "^0.38.4"
   }
 }
